@@ -20,5 +20,11 @@ class Person(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "age": self.age,
             # do not serialize the password, its a security breach
         }
+    
+    def get_all():
+        members=Person.query.order_by(Person.age.desc())
+        members= list(map(lambda Person: Person.serialize(),members))
+        return members
