@@ -21,11 +21,19 @@ class Person(db.Model):
             "id": self.id,
             "name": self.name,
             "age": self.age,
+            'relationship':self.relationship
             # do not serialize the password, its a security breach
         }
     
-    def get_all():
+    def getAll():
         members=Person.query.order_by(Person.age.desc())
         members= list(map(lambda Person: Person.serialize(),members))
         return members
-        
+
+    def getPerson(id):
+        member= Person.query.get(id)
+        if member is None: 
+           return {'msg':'This member does not exist'}
+        member= Person.serialize(member)
+
+        return member
